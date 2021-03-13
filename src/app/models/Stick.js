@@ -34,7 +34,7 @@ class Stick extends Model {
   static associate(models) {
     this.belongsTo(models.User, {
       as: 'users',
-      foreignKey: 'user_id',
+      foreignKey: 'id',
     });
   }
 }

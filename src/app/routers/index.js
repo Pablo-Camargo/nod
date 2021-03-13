@@ -1,4 +1,4 @@
-import users from './users';
-import sticks from './sticks';
+import user from './users';
+import stick from './sticks';
 
-export default [users, sticks];
+export default [user, stick];

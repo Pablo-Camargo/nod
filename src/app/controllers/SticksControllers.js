@@ -1,21 +1,22 @@
-import Sticks from '../models/Sticks';
-import Users from '../models/Users';
+import Stick from '../models/Stick';
+import User from '../models/User';
 
 class SticksControllers {
   async index(req, res) {
-    const notas = await Sticks.findAll();
+    const notas = await Stick.findAll();
     return res.json(notas);
   }
 
   async show(req, res) {
     // eslint-disable-next-line camelcase
     const { user_id } = req.params;
+    const id = user_id;
 
-    const user = await Users.findByPk(user_id);
+    const user = await User.findByPk(id);
     if (!user) {
       return res.status(400).json({ error: '/user not found' });
     }
-    const post = await Sticks.findAll({ where: { user_id } });
+    const post = await Stick.findAll({ where: { user_id } });
     return res.json(post);
   }
 
@@ -23,11 +24,11 @@ class SticksControllers {
     // eslint-disable-next-line camelcase
     const { user_id } = req.params;
     const { content } = req.body;
-    const user = await Users.findByPk(user_id);
+    const user = await User.findByPk(user_id);
     if (!user) {
       return res.status(400).json({ error: '/user not found' });
     }
-    const post = await Sticks.create({ content, user_id });
+    const post = await Stick.create({ content, user_id });
     return res.json(post);
   }
 
@@ -42,7 +43,7 @@ class SticksControllers {
         massage: 'Invalid ID',
       });
     }
-    const user = await Users.findByPk(parse);
+    const user = await User.findByPk(parse);
 
     user.content = content;
     user.save(user);
@@ -60,7 +61,7 @@ class SticksControllers {
         massage: 'Invalid ID',
       });
     }
-    const user = await Sticks.findByPk(parse);
+    const user = await Stick.findByPk(parse);
     await user.destroy();
     return res.json();
   }

@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Sticks extends Model {
+class User extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -10,32 +10,29 @@ class Sticks extends Model {
           autoIncrement: true,
           primaryKey: true,
         },
-        content: {
-          type: Sequelize.DataTypes.TEXT,
+        name: {
+          type: Sequelize.DataTypes.STRING,
           allowNull: false,
         },
-        user_id: {
-          type: Sequelize.DataTypes.INTEGER,
-          allowNull: true,
-          references: {
-            model: 'users',
-            key: 'id',
-          },
+        email: {
+          type: Sequelize.DataTypes.STRING,
+          allowNull: false,
         },
       },
       {
         sequelize,
-        tableName: 'sticks',
+        tableName: 'users',
       }
     );
     return this;
   }
 
-  static associations(models) {
-    this.belongsTo(models.Users, {
-      as: 'users',
+  static associate(models) {
+    this.hasMany(models.Stick, {
+      as: 'sticks',
       foreignKey: 'user_id',
     });
   }
 }
-export default Sticks;
+
+export default User;

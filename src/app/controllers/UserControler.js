@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 
-import Users from '../models/Users';
+import User from '../models/User';
 
 class UsersControllers {
   async index(req, res) {
@@ -17,7 +17,7 @@ class UsersControllers {
     if (email) {
       where.email = email;
     }
-    const users = await Users.findAndCountAll({
+    const users = await User.findAndCountAll({
       where,
       limit,
       offset: limit * (page - 1),
@@ -27,14 +27,14 @@ class UsersControllers {
 
   async show(req, res) {
     const { id } = req.body;
-    const users = await Users.findByPk(id);
+    const users = await User.findByPk(id);
     return res.json(users);
   }
 
   async store(req, res) {
     const { name, email } = req.body;
 
-    const user = await Users.create({
+    const user = await User.create({
       name,
       email,
     });
@@ -52,7 +52,7 @@ class UsersControllers {
         massage: 'Invalid ID',
       });
     }
-    const user = await Users.findByPk(parse);
+    const user = await User.findByPk(parse);
 
     user.name = name;
     user.email = email;
@@ -71,7 +71,7 @@ class UsersControllers {
         massage: 'Invalid ID',
       });
     }
-    const user = await Users.findByPk(parse);
+    const user = await User.findByPk(parse);
     await user.destroy();
     return res.json();
   }
